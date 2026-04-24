@@ -69,7 +69,7 @@
     margin: 0 auto;
     padding: 0 32px;
     position: relative;
-    z-index: 2;
+    z-index: 3;
   }
 
   /* ──────────────────────────── NAV */
@@ -82,8 +82,14 @@
     align-items: center;
     z-index: 100;
     backdrop-filter: blur(14px);
-    background: rgba(245, 242, 237, 0.75);
-    border-bottom: 1px solid rgba(14, 11, 20, 0.08);
+    background: rgba(107, 75, 163, 0.92);
+    border-bottom: 1px solid rgba(14, 11, 20, 0.15);
+  }
+
+  nav .logo { color: var(--bg); }
+  nav .logo-mark {
+    background: var(--bg);
+    box-shadow: 0 0 0 3px rgba(245,242,237,0.25);
   }
 
   .logo {
@@ -119,17 +125,17 @@
   }
 
   .nav-links a {
-    color: var(--ink-soft);
+    color: rgba(245, 242, 237, 0.85);
     text-decoration: none;
     position: relative;
     padding: 4px 0;
     transition: color 0.2s ease;
   }
 
-  .nav-links a:hover { color: var(--amethyst); }
+  .nav-links a:hover { color: var(--bg); }
   .nav-links a::after {
     content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 1px; background: var(--amethyst);
+    width: 0; height: 1px; background: var(--bg);
     transition: width 0.3s ease;
   }
   .nav-links a:hover::after { width: 100%; }
@@ -268,7 +274,7 @@
 
   .hero-visual {
     position: absolute;
-    right: -40px;
+    right: -120px;
     top: 50%;
     transform: translateY(-50%);
     width: 620px;
@@ -289,6 +295,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
+    z-index: 4;
   }
 
   .hero-label {
@@ -297,13 +304,14 @@
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ink-soft);
-    padding: 6px 12px;
-    border: 1px solid rgba(14,11,20,0.15);
-    background: rgba(245,242,237,0.7);
+    color: var(--ink);
+    padding: 7px 13px;
+    border: 1px solid rgba(14,11,20,0.3);
+    background: var(--bg);
     backdrop-filter: blur(8px);
     white-space: nowrap;
     animation: labelFloat 8s ease-in-out infinite;
+    box-shadow: 0 2px 8px rgba(14,11,20,0.08);
   }
 
   .hero-label::before {
@@ -318,10 +326,10 @@
     box-shadow: 0 0 8px var(--amethyst-glow);
   }
 
-  .hero-label.l1 { top: 18%; right: 8%; animation-delay: 0s; }
-  .hero-label.l2 { top: 42%; right: 2%; animation-delay: 2s; }
-  .hero-label.l3 { top: 68%; right: 10%; animation-delay: 4s; }
-  .hero-label.l4 { top: 85%; right: 22%; animation-delay: 6s; }
+  .hero-label.l1 { top: 12%; right: 3%; animation-delay: 0s; }
+  .hero-label.l2 { top: 38%; right: 3%; animation-delay: 2s; }
+  .hero-label.l3 { top: 72%; right: 3%; animation-delay: 4s; }
+  .hero-label.l4 { top: 90%; right: 26%; animation-delay: 6s; }
 
   @keyframes labelFloat {
     0%, 100% { transform: translateY(0); opacity: 0.9; }
@@ -1338,6 +1346,7 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
 <script>
   // ═══════════════════════════════════════════════════════════════
   // HERO CRYSTAL SCENE — Three.js
@@ -1358,83 +1367,123 @@
     renderer.setSize(W(), H());
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
     mount.appendChild(renderer.domElement);
 
-    // ── Lighting — warm key + amethyst fill + rim
-    const ambient = new THREE.AmbientLight(0xffffff, 0.3);
-    scene.add(ambient);
+    // ── Environment map — studio reflections for photoreal PBR
+    if (typeof THREE.RoomEnvironment !== 'undefined') {
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      scene.environment = pmrem.fromScene(new THREE.RoomEnvironment(), 0.04).texture;
+    }
 
-    const keyLight = new THREE.PointLight(0xffd9a0, 1.8, 20);
+    // ── Lighting — subtle accents; env map does the heavy lifting
+    const keyLight = new THREE.PointLight(0xffd9a0, 0.9, 20);
     keyLight.position.set(4, 3, 5);
     scene.add(keyLight);
 
-    const fillLight = new THREE.PointLight(0x8B5FD6, 2.2, 15);
+    const fillLight = new THREE.PointLight(0x8B5FD6, 1.4, 15);
     fillLight.position.set(-3, -2, 3);
     scene.add(fillLight);
 
-    const rimLight = new THREE.PointLight(0xc9a24d, 1.2, 12);
+    const rimLight = new THREE.PointLight(0xc9a24d, 0.7, 12);
     rimLight.position.set(0, 4, -4);
     scene.add(rimLight);
 
-    // ── The crystal — bipyramidal/prismatic amethyst shape
-    // Built from an octahedron, stretched vertically, with noise for facets
+    // ── The crystal — true hexagonal prism with bipyramidal terminations
+    // (the actual shape of a natural amethyst point)
     const crystalGroup = new THREE.Group();
     scene.add(crystalGroup);
 
-    const crystalGeo = new THREE.OctahedronGeometry(1.8, 1);
-    // Elongate vertically for classic amethyst prism look
-    const posAttr = crystalGeo.attributes.position;
-    for (let i = 0; i < posAttr.count; i++) {
-      const y = posAttr.getY(i);
-      posAttr.setY(i, y * 1.6);
-      // subtle random jitter for hand-cut feel
-      const x = posAttr.getX(i);
-      const z = posAttr.getZ(i);
-      posAttr.setX(i, x + (Math.random() - 0.5) * 0.08);
-      posAttr.setZ(i, z + (Math.random() - 0.5) * 0.08);
+    function createAmethystGeometry(radius, prismHalfHeight, apexHeight, jitter) {
+      const verts = [];
+      // Top hexagon ring (indices 0–5)
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI * 2;
+        verts.push(Math.cos(a) * radius, prismHalfHeight, Math.sin(a) * radius);
+      }
+      // Bottom hexagon ring (indices 6–11)
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI * 2;
+        verts.push(Math.cos(a) * radius, -prismHalfHeight, Math.sin(a) * radius);
+      }
+      // Apex points (12 = top, 13 = bottom)
+      verts.push(0, prismHalfHeight + apexHeight, 0);
+      verts.push(0, -prismHalfHeight - apexHeight, 0);
+
+      const indices = [];
+      for (let i = 0; i < 6; i++) {
+        const ni = (i + 1) % 6;
+        // Side quads
+        indices.push(i, i + 6, ni);
+        indices.push(ni, i + 6, ni + 6);
+        // Top pyramid
+        indices.push(12, i, ni);
+        // Bottom pyramid (reversed winding)
+        indices.push(13, ni + 6, i + 6);
+      }
+
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+      geo.setIndex(indices);
+
+      // Hand-cut jitter on the ring vertices (skip apex)
+      const pos = geo.attributes.position;
+      for (let i = 0; i < 12; i++) {
+        pos.setX(i, pos.getX(i) + (Math.random() - 0.5) * jitter);
+        pos.setZ(i, pos.getZ(i) + (Math.random() - 0.5) * jitter);
+        pos.setY(i, pos.getY(i) + (Math.random() - 0.5) * jitter * 0.4);
+      }
+      geo.computeVertexNormals();
+      return geo;
     }
-    crystalGeo.computeVertexNormals();
+
+    const crystalGeo = createAmethystGeometry(1.15, 1.5, 0.95, 0.06);
 
     const crystalMat = new THREE.MeshPhysicalMaterial({
-      color: 0x6B4BA3,
-      metalness: 0.15,
-      roughness: 0.12,
-      transmission: 0.65,     // glassy translucency
-      thickness: 1.8,
-      ior: 1.7,
+      color: 0x2a1650,             // true deep amethyst
+      metalness: 0.3,
+      roughness: 0.25,
       clearcoat: 1.0,
       clearcoatRoughness: 0.08,
-      envMapIntensity: 1.2,
-      emissive: 0x3F2B66,
-      emissiveIntensity: 0.25,
-      flatShading: true,      // crisp facets
+      envMapIntensity: 0.7,
+      emissive: 0x1a0d33,
+      emissiveIntensity: 0.3,
+      flatShading: true,
+      transparent: true,
+      opacity: 0.88,
     });
 
     const crystal = new THREE.Mesh(crystalGeo, crystalMat);
     crystalGroup.add(crystal);
 
-    // Wireframe edges for definition
-    const edges = new THREE.EdgesGeometry(crystalGeo, 15);
+    // Subtle edge highlights — picks out the facet lines without being cartoony
+    const edges = new THREE.EdgesGeometry(crystalGeo, 1);
     const edgeMat = new THREE.LineBasicMaterial({
-      color: 0x0E0B14,
+      color: 0x2A1F45,
       transparent: true,
-      opacity: 0.4,
-      linewidth: 1,
+      opacity: 0.22,
     });
     const wireframe = new THREE.LineSegments(edges, edgeMat);
     crystalGroup.add(wireframe);
 
-    // Inner glow core (smaller mesh, additive blend)
-    const coreGeo = new THREE.OctahedronGeometry(0.9, 0);
-    coreGeo.scale(1, 1.5, 1);
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x8B5FD6,
+    // Inner core — smaller matching hex gem, deep amethyst, for depth/chromatic inclusion feel
+    const coreGeo = createAmethystGeometry(0.55, 0.9, 0.5, 0.03);
+    const coreMat = new THREE.MeshPhysicalMaterial({
+      color: 0x3F2B66,
+      metalness: 0,
+      roughness: 0.3,
+      emissive: 0x6B4BA3,
+      emissiveIntensity: 0.6,
       transparent: true,
-      opacity: 0.35,
-      blending: THREE.AdditiveBlending,
+      opacity: 0.7,
+      flatShading: true,
     });
     const core = new THREE.Mesh(coreGeo, coreMat);
     crystalGroup.add(core);
+
+    crystalGroup.scale.setScalar(1.0);
 
     // ── Orbital nodes — represent integrations/services connecting to the crystal
     const nodeGroup = new THREE.Group();
