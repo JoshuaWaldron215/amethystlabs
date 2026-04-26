@@ -1249,7 +1249,7 @@
         </div>
       </div>
 
-      <form class="brief-form" onsubmit="handleSubmit(event)">
+      <form class="brief-form" onsubmit="handleSubmit(event)" novalidate>
         <div class="form-header">
           <span>· Project Brief</span>
           <span>~ 60 seconds</span>
@@ -1257,22 +1257,22 @@
 
         <div class="form-group">
           <label>Your name</label>
-          <input type="text" placeholder="Alex Rivera" required />
+          <input type="text" name="name" placeholder="Alex Rivera" required />
         </div>
 
         <div class="form-group">
           <label>Email</label>
-          <input type="email" placeholder="alex@company.com" required />
+          <input type="email" name="email" placeholder="alex@company.com" required />
         </div>
 
         <div class="form-group">
           <label>Company / Project</label>
-          <input type="text" placeholder="Acme Logistics" />
+          <input type="text" name="company" placeholder="Acme Logistics" />
         </div>
 
         <div class="form-group">
           <label>What do you need built?</label>
-          <select required>
+          <select name="projectType" required>
             <option value="">Select one —</option>
             <option>Custom CRM or portal</option>
             <option>AI automation / agent</option>
@@ -1290,12 +1290,15 @@
             <button type="button" class="chip" onclick="toggleChip(this)">$15–25k</button>
             <button type="button" class="chip" onclick="toggleChip(this)">$25k+</button>
           </div>
+          <input type="hidden" name="budget" id="budgetField" />
         </div>
 
         <div class="form-group">
           <label>Tell us the problem</label>
-          <textarea placeholder="What's broken, slow, or missing?" required></textarea>
+          <textarea name="problem" placeholder="What's broken, slow, or missing?" required></textarea>
         </div>
+
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
 
         <button type="submit" class="form-submit">
           Send brief <span>→</span>
@@ -1673,18 +1676,59 @@
   function toggleChip(btn) {
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
+    const field = document.getElementById('budgetField');
+    if (field) field.value = btn.textContent.trim();
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.innerHTML = 'Sent · we\'ll reply within 24hrs ✓';
-    btn.style.background = '#3F2B66';
-    setTimeout(() => e.target.reset(), 400);
-    setTimeout(() => {
-      btn.innerHTML = 'Send brief <span>→</span>';
-      btn.style.background = '';
-    }, 4000);
+    const form = e.target;
+    const btn = form.querySelector('.form-submit');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const originalHTML = btn.innerHTML;
+    const originalBg = btn.style.background;
+    btn.disabled = true;
+    btn.innerHTML = 'Sending…';
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const resp = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!resp.ok) {
+        const { error } = await resp.json().catch(() => ({}));
+        throw new Error(error || 'Send failed');
+      }
+
+      btn.innerHTML = 'Sent · we\'ll reply within 24hrs ✓';
+      btn.style.background = '#3F2B66';
+      setTimeout(() => {
+        form.reset();
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      }, 400);
+      setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.style.background = originalBg;
+        btn.disabled = false;
+      }, 4000);
+    } catch (err) {
+      btn.innerHTML = 'Failed — try again';
+      btn.style.background = '#8B2B3F';
+      setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.style.background = originalBg;
+        btn.disabled = false;
+      }, 3000);
+    }
   }
 </script>
 
