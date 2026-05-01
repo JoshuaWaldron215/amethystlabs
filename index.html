@@ -703,7 +703,20 @@
     margin-bottom: 12px;
   }
 
-  .team-bio { color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
+  .team-bio { color: var(--ink-soft); font-size: 14px; line-height: 1.55; margin-bottom: 12px; }
+
+  .team-x {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amethyst);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+  .team-x:hover { border-bottom-color: var(--amethyst); }
 
   /* ──────────────────────────── CTA / FORM */
   .cta-section {
@@ -1215,6 +1228,7 @@
         <h3 class="team-name">Josh</h3>
         <div class="team-role">Builder · Architecture</div>
         <p class="team-bio">Infrastructure, backend systems, technical architecture. If it's load-bearing, he built it.</p>
+        <a class="team-x" href="https://x.com/BuiltByJuice" target="_blank" rel="noopener">@BuiltByJuice ↗</a>
       </div>
       <div class="team-card">
         <div class="team-avatar" data-initial="S"></div>
@@ -1227,6 +1241,7 @@
         <h3 class="team-name">Aqeel</h3>
         <div class="team-role">Builder · Delivery & QA</div>
         <p class="team-bio">Ships features, breaks them on purpose, fixes them before you see them. The reason things actually work.</p>
+        <a class="team-x" href="https://x.com/BuiltByAqeel" target="_blank" rel="noopener">@BuiltByAqeel ↗</a>
       </div>
     </div>
   </div>
@@ -1343,8 +1358,6 @@
       <div class="footer-col">
         <h4>Connect</h4>
         <a href="mailto:support@amethystlabs.ai">support@amethystlabs.ai</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
         <a href="#">X / Twitter</a>
       </div>
     </div>
