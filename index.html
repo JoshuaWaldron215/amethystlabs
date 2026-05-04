@@ -34,8 +34,8 @@
     --bg-alt: #261843;         /* elevated surface (cards, accents) */
     --bg-deep: #110820;        /* deeper surface (featured sections) */
     --ink: #F2E8D0;            /* warm champagne — body text */
-    --ink-soft: #C8B89A;       /* muted champagne — secondary text */
-    --muted: #8A7B5C;          /* dimmer text / labels */
+    --ink-soft: #DDCFAE;       /* muted champagne — secondary text */
+    --muted: #A89878;          /* dimmer text / labels */
     --rule: rgba(212,168,87,0.18);
     --amethyst: #D4A857;       /* primary accent — champagne gold */
     --amethyst-deep: #B8924A;  /* deeper gold */
@@ -56,8 +56,8 @@
     background: var(--bg);
     color: var(--ink);
     font-family: var(--sans);
-    font-weight: 400;
-    line-height: 1.5;
+    font-weight: 500;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     position: relative;
@@ -356,7 +356,7 @@
   .hero-label.l1 { top: 12%; right: 3%; animation-delay: 0s; }
   .hero-label.l2 { top: 38%; right: 3%; animation-delay: 2s; }
   .hero-label.l3 { top: 72%; right: 3%; animation-delay: 4s; }
-  .hero-label.l4 { top: 90%; right: 26%; animation-delay: 6s; }
+  .hero-label.l4 { top: 67%; right: 12%; animation-delay: 6s; }
 
   @keyframes labelFloat {
     0%, 100% { transform: translateY(0); opacity: 0.9; }
@@ -996,6 +996,7 @@
     .cta-grid { grid-template-columns: 1fr; gap: 48px; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .footer-bottom { flex-direction: column; gap: 12px; }
+    .ticker-track { animation-duration: 22s; }
   }
 
   /* Scroll reveal */
@@ -1382,7 +1383,7 @@
       <div class="footer-col">
         <h4>Connect</h4>
         <a href="mailto:support@amethystlabs.ai">support@amethystlabs.ai</a>
-        <a href="#">X / Twitter</a>
+        <a href="https://x.com/amethystlabsai" target="_blank" rel="noopener">X / Twitter ↗</a>
       </div>
     </div>
     <div class="footer-bottom">
