@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The AI Automation Playbook — 5 automations that pay for themselves in 30 days</title>
+<meta name="description" content="Free playbook by Josh (@BuiltByJuice). Five AI automations any small business can run in 30 days — exact tools, prompts, and ROI math." />
+<meta name="theme-color" content="#1A0E2E" />
+<link rel="icon" type="image/jpeg" href="/logo.jpg" />
+<link rel="apple-touch-icon" href="/logo.jpg" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The AI Automation Playbook — 5 automations in 30 days" />
+<meta property="og:description" content="Free playbook by Josh (@BuiltByJuice). Five AI automations any small business can run in 30 days — exact tools, prompts, and ROI math." />
+<meta property="og:url" content="https://amethystlabs.ai/playbook" />
+<meta property="og:site_name" content="Amethyst Labs" />
+<meta property="og:image" content="https://amethystlabs.ai/logo.jpg" />
+<meta property="og:image:width" content="795" />
+<meta property="og:image:height" content="801" />
+<meta property="og:image:alt" content="Amethyst Labs logo" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The AI Automation Playbook — 5 automations in 30 days" />
+<meta name="twitter:description" content="Free playbook by Josh (@BuiltByJuice). Five AI automations any small business can run in 30 days — exact tools, prompts, and ROI math." />
+<meta name="twitter:image" content="https://amethystlabs.ai/logo.jpg" />
+<meta name="twitter:creator" content="@BuiltByJuice" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #1A0E2E;
+    --bg-alt: #261843;
+    --bg-deep: #110820;
+    --ink: #F2E8D0;
+    --ink-soft: #C8B89A;
+    --muted: #8A7B5C;
+    --rule: rgba(212,168,87,0.18);
+    --amethyst: #D4A857;
+    --amethyst-deep: #B8924A;
+    --amethyst-glow: #E5BD6E;
+    --purple: #6B4BA3;
+    --serif: 'Instrument Serif', 'Times New Roman', serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Subtle grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.28;
+    mix-blend-mode: overlay;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+  }
+
+  /* Atmospheric gold glow behind the hero */
+  body::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(212,168,87,0.18), transparent 60%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* ───────── NAV ───────── */
+  nav {
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .logo img {
+    width: 26px; height: 26px;
+    border-radius: 4px;
+    display: block;
+    box-shadow: 0 0 0 1px rgba(212,168,87,0.3);
+  }
+
+  .nav-back {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .nav-back:hover { color: var(--amethyst); }
+
+  /* ───────── HERO ───────── */
+  .hero {
+    padding: 64px 0 72px;
+    text-align: center;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--amethyst);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--amethyst);
+    opacity: 0.6;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(44px, 6.4vw, 84px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin: 0 auto 24px;
+    max-width: 800px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amethyst);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 580px;
+    margin: 0 auto 44px;
+  }
+
+  /* ───────── FORM ───────── */
+  .signup-form {
+    display: flex;
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 8px;
+    background: rgba(242, 232, 208, 0.04);
+    border: 1px solid rgba(212, 168, 87, 0.22);
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s ease;
+  }
+
+  .signup-form:focus-within {
+    border-color: var(--amethyst);
+    box-shadow: 0 0 0 4px rgba(212, 168, 87, 0.08);
+  }
+
+  .signup-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    padding: 14px 16px;
+  }
+
+  .signup-form input::placeholder {
+    color: rgba(242, 232, 208, 0.4);
+  }
+
+  .signup-form button {
+    background: var(--amethyst);
+    color: var(--bg);
+    border: none;
+    padding: 14px 22px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .signup-form button:hover {
+    background: var(--amethyst-glow);
+    transform: translateY(-1px);
+  }
+
+  .signup-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .form-meta {
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ───────── TRUST STRIP ───────── */
+  .trust-strip {
+    padding: 36px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+    margin-top: 56px;
+  }
+
+  .trust-strip span { opacity: 0.7; }
+  .trust-strip strong { color: var(--amethyst); font-weight: 500; }
+
+  /* ───────── INSIDE ───────── */
+  .inside {
+    padding: 96px 0 80px;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; width: 28px; height: 1px;
+    background: var(--rule);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 56px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title em { font-style: italic; color: var(--amethyst); }
+
+  .modules {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .module {
+    display: grid;
+    grid-template-columns: 80px 1fr 200px;
+    gap: 32px;
+    padding: 32px 4px;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .module-num {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-style: italic;
+    line-height: 1;
+    color: var(--amethyst);
+    letter-spacing: -0.02em;
+  }
+
+  .module-body h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+
+  .module-body p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.55;
+    max-width: 500px;
+  }
+
+  .module-outcome {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--amethyst-glow);
+    line-height: 1.5;
+    padding-top: 8px;
+  }
+
+  .module-outcome strong {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 28px;
+    color: var(--amethyst);
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    text-transform: none;
+  }
+
+  /* ───────── ABOUT ───────── */
+  .about {
+    padding: 80px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: rgba(242, 232, 208, 0.02);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 36px;
+    align-items: start;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .about-avatar {
+    width: 120px;
+    aspect-ratio: 1;
+    background: var(--amethyst-deep);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-avatar::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(229,189,110,0.6), transparent 55%),
+      radial-gradient(circle at 70% 70%, rgba(184,146,74,0.4), transparent 55%);
+  }
+
+  .about-avatar::after {
+    content: 'J';
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 64px;
+    color: rgba(242, 232, 208, 0.95);
+  }
+
+  .about-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--amethyst);
+    margin-bottom: 10px;
+  }
+
+  .about-bio {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: -0.005em;
+  }
+
+  .about-bio em { font-style: italic; color: var(--amethyst); }
+
+  .about-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .about-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: all 0.2s ease;
+  }
+
+  .about-links a:hover {
+    color: var(--amethyst);
+    border-bottom-color: var(--amethyst);
+  }
+
+  /* ───────── FAQ ───────── */
+  .faq {
+    padding: 80px 0;
+  }
+
+  .faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-q {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+
+  .faq-a {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ───────── FINAL CTA ───────── */
+  .final-cta {
+    padding: 96px 0 96px;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+    background: var(--bg-deep);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: -150px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(212,168,87,0.18), transparent 60%);
+    filter: blur(50px);
+    pointer-events: none;
+  }
+
+  .final-cta h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .final-cta h2 em { font-style: italic; color: var(--amethyst); }
+
+  .final-cta p {
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .skip-cta {
+    margin-top: 28px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    position: relative;
+  }
+
+  .skip-cta a {
+    color: var(--amethyst);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,168,87,0.4);
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease;
+  }
+
+  .skip-cta a:hover { border-bottom-color: var(--amethyst); }
+
+  /* ───────── FOOTER ───────── */
+  footer {
+    padding: 36px 0 32px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  footer a { color: var(--ink-soft); text-decoration: none; }
+  footer a:hover { color: var(--amethyst); }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width: 760px) {
+    .hero { padding: 40px 0 56px; }
+    .signup-form {
+      flex-direction: column;
+      padding: 12px;
+    }
+    .signup-form input { padding: 12px 8px; }
+    .signup-form button { width: 100%; padding: 14px; }
+    .module {
+      grid-template-columns: 60px 1fr;
+      gap: 18px;
+    }
+    .module-num { font-size: 44px; }
+    .module-outcome {
+      grid-column: 1 / -1;
+      text-align: left;
+      padding-top: 8px;
+    }
+    .module-outcome strong { font-size: 22px; }
+    .about-grid {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+    .about-avatar { width: 80px; }
+    .trust-strip { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav>
+    <a href="/" class="logo">
+      <img src="/logo.jpg" alt="Amethyst Labs" />
+      <span>Amethyst Labs</span>
+    </a>
+    <a href="/" class="nav-back">← Back to site</a>
+  </nav>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Free Playbook · By @BuiltByJuice</div>
+    <h1>5 AI automations that <em>pay for themselves</em> in 30 days.</h1>
+    <p class="hero-sub">
+      The exact playbook I use to find, build, and ship real automations for businesses. No fluff. The tools, the prompts, and the rough ROI math — so you can run them yourself or know what to ask for.
+    </p>
+
+    <form class="signup-form" onsubmit="handleSignup(event)">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+      <button type="submit">Send me the playbook →</button>
+    </form>
+
+    <div class="form-meta">No spam. Unsubscribe anytime. ~2 emails / month.</div>
+
+    <div class="trust-strip">
+      <span><strong>3-builder shop</strong> · Philadelphia</span>
+      <span>Built for AI / SaaS / SMBs</span>
+      <span>Shipped in <strong>weeks</strong>, not quarters</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSIDE ═══ -->
+<section class="inside">
+  <div class="container">
+    <div class="section-label">What's inside</div>
+    <h2 class="section-title">Five automations. <em>Implementable in a weekend.</em></h2>
+
+    <div class="modules">
+      <div class="module">
+        <div class="module-num">01</div>
+        <div class="module-body">
+          <h3>Inbox triage agent</h3>
+          <p>An AI agent that reads incoming email, categorizes it, drafts replies for the routine ones, and surfaces only the messages that genuinely need you. The exact prompts + tool stack.</p>
+        </div>
+        <div class="module-outcome">
+          <strong>~6 hrs/week</strong>
+          time recovered
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">02</div>
+        <div class="module-body">
+          <h3>Lead enrichment + qualification</h3>
+          <p>When a lead fills out your form, automatically pull their company data, score them against your ICP, and route hot ones to your inbox with a one-line summary. Cold ones go to nurture.</p>
+        </div>
+        <div class="module-outcome">
+          <strong>2× pipeline</strong>
+          response speed
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">03</div>
+        <div class="module-body">
+          <h3>Meeting notes → CRM updates</h3>
+          <p>Sales calls auto-transcribe, then an agent extracts action items, deal stage changes, and next steps — and writes them into your CRM so nothing slips. Works with Granola, Fathom, Otter.</p>
+        </div>
+        <div class="module-outcome">
+          <strong>0 manual</strong>
+          CRM updates
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">04</div>
+        <div class="module-body">
+          <h3>Customer support deflection</h3>
+          <p>A knowledge-base-grounded agent that answers your top 20 support questions before a human ticket is created. Hands off cleanly when it can't help. Cuts ticket volume 30–60%.</p>
+        </div>
+        <div class="module-outcome">
+          <strong>−40%</strong>
+          ticket volume
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">05</div>
+        <div class="module-body">
+          <h3>Weekly ops digest</h3>
+          <p>One agent that pulls from your tools (Stripe, Linear, GA, whatever) every Monday and lands a 5-bullet summary in Slack/email. Replaces the dashboard you keep meaning to check.</p>
+        </div>
+        <div class="module-outcome">
+          <strong>5 min</strong>
+          weekly read
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-avatar"></div>
+      <div>
+        <div class="about-name">About</div>
+        <p class="about-bio">
+          I'm <em>Josh</em> — AI engineer at Amethyst Labs. We build custom CRMs, AI automations, and the workflow systems in between. I share <em>everything I learn</em> on X.
+        </p>
+        <div class="about-links">
+          <a href="https://x.com/BuiltByJuice" target="_blank" rel="noopener">@BuiltByJuice ↗</a>
+          <a href="/">amethystlabs.ai ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-label">Quick answers</div>
+    <h2 class="section-title">A few things <em>worth knowing.</em></h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Do I need to be technical?</div>
+        <div class="faq-a">No. Each automation has a no-code path (Make, n8n, Zapier) and a code path. I show both. If you can copy-paste, you can ship #1, #3, and #5.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What tools do I need?</div>
+        <div class="faq-a">Most of these run on tools you probably already pay for: Gmail/Outlook, Slack, your CRM, and either ChatGPT or Claude. Total monthly cost to run all 5 is usually under $50.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is this actually free? What's the catch?</div>
+        <div class="faq-a">Free. The catch: you'll get ~2 emails a month from me with new automations and behind-the-scenes builds. Unsubscribe in one click whenever.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Why not just hire you?</div>
+        <div class="faq-a">If reading the playbook tells you "yeah, we want this built and integrated properly" — that's what Amethyst Labs does. There's a soft CTA at the end. No pressure either way.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Get the <em>playbook.</em></h2>
+    <p>Five real automations. ~2 emails a month. No fluff.</p>
+
+    <form class="signup-form" onsubmit="handleSignup(event)">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+      <button type="submit">Send it →</button>
+    </form>
+
+    <div class="skip-cta">
+      Or skip the playbook · <a href="https://calendly.com/sadeq-tryaccelerators/30min" target="_blank" rel="noopener">book a 20-min call instead ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    © 2026 <a href="/">Amethyst Labs</a> · Philadelphia · Built by <a href="https://x.com/BuiltByJuice" target="_blank" rel="noopener">@BuiltByJuice</a>
+  </div>
+</footer>
+
+<script>
+  async function handleSignup(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button');
+    const input = form.querySelector('input[type="email"]');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    // Pull ref from URL so we can attribute X / external traffic
+    const ref = new URLSearchParams(window.location.search).get('ref') || '';
+
+    try {
+      const resp = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: input.value.trim(), ref }),
+      });
+
+      if (!resp.ok) {
+        const { error } = await resp.json().catch(() => ({}));
+        throw new Error(error || 'Send failed');
+      }
+
+      btn.textContent = '✓ Check your inbox';
+      btn.style.background = '#B8924A';
+      input.value = '';
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 5000);
+    } catch (err) {
+      btn.textContent = 'Failed — try again';
+      btn.style.background = '#A03B4F';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 3500);
+    }
+  }
+</script>
+
+</body>
+</html>
