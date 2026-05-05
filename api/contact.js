@@ -2,7 +2,7 @@
 // Sends Project Brief submissions to support@amethystlabs.ai via Resend.
 
 const TO_EMAIL = 'support@amethystlabs.ai';
-const FROM_EMAIL = 'Amethyst Labs <onboarding@resend.dev>';
+const FROM_EMAIL = 'Amethyst Labs <support@amethystlabs.ai>';
 
 const escapeHtml = (str = '') =>
   String(str)
